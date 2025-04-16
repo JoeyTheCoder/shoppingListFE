@@ -1,0 +1,47 @@
+<nav class="bg-transparent border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <a routerLink="/" class="flex items-center">
+          <img 
+            src="/shopListLogo.png" 
+            alt="ShoppingListAI Logo" 
+            class="h-10 w-auto"
+          >
+          <span class="ml-2 text-xl font-bold text-[#1B3E59]">ShoppingListAI</span>
+        </a>
+      </div>
+      
+      <div class="hidden md:flex items-center space-x-4">
+        <a routerLink="/features" class="px-3 py-2 text-gray-700 hover:text-[#FFAC00] transition-colors duration-200">Features</a>
+        <a routerLink="/pricing" class="px-3 py-2 text-gray-700 hover:text-[#FFAC00] transition-colors duration-200">Pricing</a>
+        <a routerLink="/faq" class="px-3 py-2 text-gray-700 hover:text-[#FFAC00] transition-colors duration-200">FAQ</a>
+        <a routerLink="/login" class="px-4 py-2 text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors duration-200">Log in</a>
+        <a routerLink="/register" class="px-4 py-2 bg-[#1B3E59] hover:bg-[#FFAC00] text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200">Sign up</a>
+      </div>
+      
+      <!-- Mobile menu button -->
+      <div class="flex md:hidden items-center">
+        <button (click)="toggleMobileMenu()" class="text-gray-700 hover:text-[#FFAC00] focus:outline-none">
+          <svg *ngIf="!isMobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg *ngIf="isMobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div *ngIf="isMobileMenuOpen" class="md:hidden bg-white/90 backdrop-blur-sm shadow-lg">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a routerLink="/features" class="block px-3 py-2 text-gray-700 hover:text-[#FFAC00] hover:bg-gray-50 rounded-md">Features</a>
+      <a routerLink="/pricing" class="block px-3 py-2 text-gray-700 hover:text-[#FFAC00] hover:bg-gray-50 rounded-md">Pricing</a>
+      <a routerLink="/faq" class="block px-3 py-2 text-gray-700 hover:text-[#FFAC00] hover:bg-gray-50 rounded-md">FAQ</a>
+      <a routerLink="/login" class="block px-3 py-2 text-gray-700 hover:text-[#FFAC00] hover:bg-gray-50 rounded-md">Log in</a>
+      <a routerLink="/register" class="block px-3 py-2 bg-[#1B3E59] hover:bg-[#FFAC00] text-white rounded-md">Sign up</a>
+    </div>
+  </div>
+</nav>

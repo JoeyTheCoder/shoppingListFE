@@ -1,0 +1,9 @@
+<div class="min-h-screen bg-gradient-to-br from-[#E6EEF5] via-white to-[#F2F0F0]">
+  <app-navbar *ngIf="showNavbar"></app-navbar>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer *ngIf="showFooter"></app-footer>
+</div>
