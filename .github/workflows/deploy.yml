@@ -1,0 +1,37 @@
+name: Deploy Angular App to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+        
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > /tmp/deploy_key
+          chmod 600 /tmp/deploy_key
+          rsync -avz -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" \
+            ./dist/*/ sapphirix@$SERVER_IP:$SERVER_PATH
+          rm -f /tmp/deploy_key
