@@ -33,11 +33,15 @@ jobs:
         run: |
           echo "🔧 DEBUG: SERVER_USER = $SERVER_USER"
           echo "🔧 DEBUG: SERVER_IP = $SERVER_IP"
-          echo "🔧 DEBUG: SERVER_PATH = $SERVER_PATH"
+          echo "🔧 DEBUG: SERVER_PATH (raw) = $SERVER_PATH"
 
-          # Check if SERVER_PATH is empty
+          # Strip any whitespace/newlines
+          SERVER_PATH=$(echo "$SERVER_PATH" | tr -d '\r\n\t ')
+
+          echo "📁 Cleaned SERVER_PATH = '$SERVER_PATH'"
+
           if [ -z "$SERVER_PATH" ]; then
-            echo "❌ SERVER_PATH is not set! Exiting."
+            echo "❌ SERVER_PATH is empty after cleanup! Exiting."
             exit 1
           fi
 
