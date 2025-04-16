@@ -29,9 +29,17 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SERVER_PATH: ${{ secrets.SERVER_PATH }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
           echo "$SSH_PRIVATE_KEY" > /tmp/deploy_key
           chmod 600 /tmp/deploy_key
+          
+          # First, transfer files to a temp directory the user owns
+          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "mkdir -p ~/deployment_temp"
           rsync -avz -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" \
-            ./dist/*/ sapphirix@$SERVER_IP:$SERVER_PATH
+            ./dist/*/ $SERVER_USER@$SERVER_IP:~/deployment_temp/
+          
+          # Then use sudo to move files to the final destination
+          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "sudo cp -r ~/deployment_temp/* $SERVER_PATH/ && sudo chown -R www-data:www-data $SERVER_PATH && rm -rf ~/deployment_temp"
+          
           rm -f /tmp/deploy_key
